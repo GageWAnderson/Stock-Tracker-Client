@@ -5,6 +5,8 @@ import Home from './pages/Home';
 import About from './pages/About';
 import Contact from './pages/Contact';
 import CurrentObjects from './pages/CurrentObjects';
+import CreateOrUpdateObject from './pages/CreateOrUpdateObject';
+import DeleteObject from './pages/DeleteObject';
 
 const App = () => {
   return (
@@ -21,7 +23,13 @@ const App = () => {
             <NavLink to={routes.contact}>Contact Us</NavLink>
           </li>
           <li>
-            <NavLink to={routes.currentObjects}>CurrentObjects</NavLink>
+            <NavLink to={routes.currentObjects}>Current Objects</NavLink>
+          </li>
+          <li>
+            <NavLink to={routes.postObject}>Create or Update Object</NavLink>
+          </li>
+          <li>
+            <NavLink to={routes.deleteObject}>Delete Object</NavLink>
           </li>
         </ul>
         <Routes>
@@ -29,6 +37,8 @@ const App = () => {
           <Route exact path={routes.about} element={<About />}></Route>
           <Route exact path={routes.contact} element={<Contact />}></Route>
           <Route exact path={routes.currentObjects} element={<CurrentObjects />}></Route>
+          <Route exact path={routes.postObject} element={<CreateOrUpdateObject />}></Route>
+          <Route exact path={routes.deleteObject} element={<DeleteObject />}></Route>
         </Routes>
       </div>
     </BrowserRouter>
