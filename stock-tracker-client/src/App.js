@@ -4,8 +4,9 @@ import routes from './data/routes.js';
 import Home from './pages/Home';
 import About from './pages/About';
 import Contact from './pages/Contact';
+import CurrentObjects from './pages/CurrentObjects';
 
-function App() {
+const App = () => {
   return (
     <BrowserRouter>
       <div className="App">
@@ -19,11 +20,15 @@ function App() {
           <li>
             <NavLink to={routes.contact}>Contact Us</NavLink>
           </li>
+          <li>
+            <NavLink to={routes.currentObjects}>CurrentObjects</NavLink>
+          </li>
         </ul>
         <Routes>
           <Route exact path={routes.home} element={<Home />}></Route>
           <Route exact path={routes.about} element={<About />}></Route>
           <Route exact path={routes.contact} element={<Contact />}></Route>
+          <Route exact path={routes.currentObjects} element={<CurrentObjects />}></Route>
         </Routes>
       </div>
     </BrowserRouter>
