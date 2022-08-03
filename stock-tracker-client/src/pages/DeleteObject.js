@@ -34,7 +34,7 @@ const DeleteObject = () => {
                 setSaveState(saveStatus.FAILURE);
             }
         }).catch(() => {
-            setSaveState(saveStatus.FAILURE);
+            setSaveState(saveStatus.FAILURE)
         })
 
     }
