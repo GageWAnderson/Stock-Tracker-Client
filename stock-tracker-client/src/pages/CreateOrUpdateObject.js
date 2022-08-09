@@ -1,14 +1,12 @@
 import React, { useState } from "react";
-import axios from "axios";
-import urls from "../data/urls";
-import endpoints from "../data/endpoints";
 import saveStatus from "../util/saveStatus";
+import {
+    sendGetObjectRequest,
+    sendUpdateObjectRequest,
+    sendSaveObjectRequest,
+} from "../util/requests";
 
 const CreateOrUpdateObject = () => {
-
-    const getObjectUrl = (id) => urls.LOGIC_LOCAL_URL + endpoints.getTestObject(id);
-    const updateObjectUrl = (id) => urls.LOGIC_LOCAL_URL + endpoints.updateTestObject(id);
-    const saveObjectUrl = urls.LOGIC_LOCAL_URL + endpoints.saveTestObject;
 
     const [id, setId] = useState(null);
     const [name, setName] = useState(null);
@@ -30,31 +28,41 @@ const CreateOrUpdateObject = () => {
         setEmail(e.target.value);
     }
 
+    const objectDoesNotExist = (response) => {
+        return !response || Object.entries(response).length === 0;
+    }
+
     const submitObject = (event) => {
         event.preventDefault();
         if (!id || isNaN(id) || !name || !email) {
-            console.log("You must submit a name, id (must be a number), and email.");
             return;
         }
         const updatedObject = { testId: id, testName: name, testEmail: email };
-        console.log(updatedObject);
         setSaveState(saveStatus.LOADING);
-        axios.get(getObjectUrl(id)).then((response) => {
-            console.log(response);
-            if (response.data) {
-                axios.put(updateObjectUrl(id), updatedObject).then(() => {
-                    setSaveState(saveStatus.SUCCESS);
-                }).catch(() => {
-                    setSaveState(saveStatus.FAILURE);
-                })
-            } else {
-                axios.post(saveObjectUrl, updatedObject).then(() => {
-                    setSaveState(saveStatus.SUCCESS);
-                }).catch(() => {
-                    setSaveState(saveStatus.FAILURE);
-                })
-            }
-        })
+        sendGetObjectRequest(id)
+            .then((response) => {
+                if (objectDoesNotExist(response)) {
+                    sendSaveObjectRequest(updatedObject)
+                    .then(() => {
+                        setSaveState(saveStatus.SUCCESS);
+                    })
+                    .catch(() => {
+                        setSaveState(saveStatus.FAILURE);
+                    })
+                } else {
+                    sendUpdateObjectRequest(id, updatedObject)
+                    .then(() => {
+                        setSaveState(saveStatus.SUCCESS);
+                    })
+                    .catch(() => {
+                        setSaveState(saveStatus.FAILURE);
+                    })
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+                setSaveState(saveStatus.FAILURE);
+            });
     }
 
     if (saveState === saveStatus.LOADING) {

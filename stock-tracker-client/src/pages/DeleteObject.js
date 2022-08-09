@@ -1,13 +1,9 @@
 import React, { useState } from "react";
-import axios from 'axios';
-import urls from "../data/urls";
-import endpoints from "../data/endpoints";
 import saveStatus from "../util/saveStatus";
+import { sendDeleteObjectRequest } from "../util/requests";
 
 const DeleteObject = () => {
 
-    const objectDeleteUrl = (id) => urls.LOGIC_LOCAL_URL + endpoints.updateTestObject(id);
-    const getObjectUrl = (id) => urls.LOGIC_LOCAL_URL + endpoints.getTestObject(id);
 
     const [id, setId] = useState(null);
     const [saveState, setSaveState] = useState(saveStatus.UNSAVED);
@@ -22,21 +18,13 @@ const DeleteObject = () => {
         if (!id || isNaN(id)) {
             return;
         }
-        setSaveState(saveStatus.LOADING);
-        axios.get(getObjectUrl(id)).then((response) => {
-            if (response.data) {
-                axios.delete(objectDeleteUrl(id)).then(() => {
-                    setSaveState(saveStatus.SUCCESS);
-                }).catch(() => {
-                    setSaveState(saveStatus.FAILURE);
-                })
-            } else {
+        sendDeleteObjectRequest(id)
+            .then(() => {
+                setSaveState(saveStatus.SUCCESS);
+            })
+            .catch(() => {
                 setSaveState(saveStatus.FAILURE);
-            }
-        }).catch(() => {
-            setSaveState(saveStatus.FAILURE)
-        })
-
+            })
     }
 
     if (saveState === saveStatus.LOADING) {

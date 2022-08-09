@@ -1,9 +1,9 @@
 const endpoints = {
-    getTestObject: (testId) => `/testObjects/${testId}`,
-    getTestObjects: "/testObjects",
-    updateTestObject: (testId) => `/testObjects/${testId}`,
-    saveTestObject: "/testObjects",
-    deleteTestObject: (testId) => `testObjects/${testId}`
+    getTestObject: (testId) => `/api/testObjects/${testId}`,
+    getTestObjects: "/api/testObjects",
+    updateTestObject: (testId) => `/api/testObjects/${testId}`,
+    saveTestObject: "/api/testObjects",
+    deleteTestObject: (testId) => `/api/testObjects/${testId}`
 };
 
 export default endpoints;

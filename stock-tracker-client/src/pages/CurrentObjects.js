@@ -1,22 +1,20 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
-import endpoints from "../data/endpoints";
-import urls from "../data/urls";
+import { sendGetAllObjectsRequest } from "../util/requests";
 
 const CurrentObjects = () => {
-
-    const testObjectUrl = urls.LOGIC_LOCAL_URL + endpoints.getTestObjects;
 
     const [testObjects, setTestObjects] = useState([]);
     const [hasErr, setHasErr] = useState(false);
 
     useEffect(() => {
-        axios.get(testObjectUrl).then((response) => {
-            setTestObjects(response.data);
-        }).catch((err) => {
-            setHasErr(true);
-        })
-    }, [testObjectUrl]);
+        sendGetAllObjectsRequest()
+            .then((response) => {
+                setTestObjects(response)
+            })
+            .catch(() => {
+                setHasErr(true);
+            });
+    }, []);
 
     const renderTestObjects = () => {
         return (
