@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { sendGetAllObjectsRequest } from "../util/requests";
+import { Container, ListGroup, ListGroupItem } from 'reactstrap';
 
 const CurrentObjects = () => {
 
@@ -16,16 +17,21 @@ const CurrentObjects = () => {
             });
     }, []);
 
+    const testObjectListItem = (testObject) => {
+        return (
+            <ListGroupItem>
+                <span>
+                    <b>ID:</b> {testObject.testId} <b>Email:</b> {testObject.testEmail} <b>Name:</b> {testObject.testName}
+                </span>
+            </ListGroupItem>
+        );
+    }
+
     const renderTestObjects = () => {
         return (
-            testObjects.map(testObject => {
-                return (<>
-                    <h4>{testObject.testId}</h4>
-                    <h4>{testObject.testEmail}</h4>
-                    <h4>{testObject.testName}</h4>
-                    <br />
-                </>)
-            })
+            <ListGroup>
+                {testObjects.map(testObject => { return testObjectListItem(testObject); })}
+            </ListGroup>
         );
     }
 
@@ -35,10 +41,10 @@ const CurrentObjects = () => {
         );
     } else {
         return (
-            <>
+            <Container>
                 <h1>Test Objects:</h1>
                 {renderTestObjects()}
-            </>
+            </Container>
 
         );
     }

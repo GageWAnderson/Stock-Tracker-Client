@@ -7,10 +7,11 @@ import CurrentObjects from '../pages/CurrentObjects';
 import DeleteObject from '../pages/DeleteObject';
 import { Route, Routes } from 'react-router-dom';
 import routes from "../data/routes.js";
+import { Container } from "reactstrap";
 
 const PageRoutes = () => {
     return (
-        <>
+        <Container>
             <Routes>
                 <Route exact path={routes.home} element={<Home />}></Route>
                 <Route exact path={routes.about} element={<About />}></Route>
@@ -19,7 +20,7 @@ const PageRoutes = () => {
                 <Route exact path={routes.postObject} element={<CreateOrUpdateObject />}></Route>
                 <Route exact path={routes.deleteObject} element={<DeleteObject />}></Route>
             </Routes>
-        </>
+        </Container>
     );
 };
 

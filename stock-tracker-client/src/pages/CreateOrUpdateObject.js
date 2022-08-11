@@ -5,6 +5,7 @@ import {
     sendUpdateObjectRequest,
     sendSaveObjectRequest,
 } from "../util/requests";
+import { Form, FormGroup, FormText, Label, Input } from 'reactstrap';
 
 const CreateOrUpdateObject = () => {
 
@@ -43,20 +44,20 @@ const CreateOrUpdateObject = () => {
             .then((response) => {
                 if (objectDoesNotExist(response)) {
                     sendSaveObjectRequest(updatedObject)
-                    .then(() => {
-                        setSaveState(saveStatus.SUCCESS);
-                    })
-                    .catch(() => {
-                        setSaveState(saveStatus.FAILURE);
-                    })
+                        .then(() => {
+                            setSaveState(saveStatus.SUCCESS);
+                        })
+                        .catch(() => {
+                            setSaveState(saveStatus.FAILURE);
+                        })
                 } else {
                     sendUpdateObjectRequest(id, updatedObject)
-                    .then(() => {
-                        setSaveState(saveStatus.SUCCESS);
-                    })
-                    .catch(() => {
-                        setSaveState(saveStatus.FAILURE);
-                    })
+                        .then(() => {
+                            setSaveState(saveStatus.SUCCESS);
+                        })
+                        .catch(() => {
+                            setSaveState(saveStatus.FAILURE);
+                        })
                 }
             })
             .catch((err) => {
@@ -79,20 +80,36 @@ const CreateOrUpdateObject = () => {
         );
     } else {
         return (
-            <>
-                <form onSubmit={submitObject}>
-                    <label htmlFor="name">ID: </label>
-                    <input type="text" id="id" onChange={changeId} />
-                    <br />
-                    <label htmlFor="name">Name: </label>
-                    <input type="text" id="name" onChange={changeName} />
-                    <br />
-                    <label htmlFor="email">Email: </label>
-                    <input type="text" id="email" onChange={changeEmail} />
-                    <br />
-                    <input type="submit" value="Submit Test Object" />
-                </form>
-            </>
+            <Form onSubmit={submitObject}>
+                <FormGroup>
+                    <Label>
+                        Input ID
+                    </Label>
+                    <Input onChange={changeId} />
+                    <FormText>
+                        The ID must be a positive integer.
+                    </FormText>
+                </FormGroup>
+                <FormGroup>
+                    <Label>
+                        Input Email
+                    </Label>
+                    <Input onChange={changeEmail} />
+                    <FormText>
+                        Must be a valid email address.
+                    </FormText>
+                </FormGroup>
+                <FormGroup>
+                    <Label>
+                        Input your Name
+                    </Label>
+                    <Input onChange={changeName} />
+                    <FormText>
+                        Must include first and last name.
+                    </FormText>
+                </FormGroup>
+                <Input type="submit" value="Submit Test Object" />
+            </Form>
         );
     }
 
