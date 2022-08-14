@@ -73,6 +73,14 @@ export const sendUpdateObjectRequest = async (id, data) => {
     return processRequest(endpoints.updateTestObject(id), generateRequest('PUT', data));
 }
 
+export const getIntradayStockDataRequest = async (stockSymbol, interval) => {
+    return processRequest(endpoints.getIntradayStockData(stockSymbol, interval))
+}
+
+export const getDailyStockDataRequest = async (stockSymbol, compact) => {
+    return processRequest(endpoints.getDailyStockData(stockSymbol, compact));
+}
+
 export const sendDeleteObjectRequest = async (id) => {
     return fetch(endpoints.deleteTestObject(id), generateRequest('DELETE'))
         .then((response) => {

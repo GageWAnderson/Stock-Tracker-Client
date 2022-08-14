@@ -4,7 +4,8 @@ const routes = {
     contact: "/contact",
     currentObjects: "/currentObjects",
     postObject: "/postObject",
-    deleteObject: "/deleteObject"
+    deleteObject: "/deleteObject",
+    stockTracker: "/stockTracker"
 };
 
 export default routes;

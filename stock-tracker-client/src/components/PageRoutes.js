@@ -8,6 +8,7 @@ import DeleteObject from '../pages/DeleteObject';
 import { Route, Routes } from 'react-router-dom';
 import routes from "../data/routes.js";
 import { Container } from "reactstrap";
+import StockTracker from "../pages/StockTracker/StockTracker";
 
 const PageRoutes = () => {
     return (
@@ -19,6 +20,7 @@ const PageRoutes = () => {
                 <Route exact path={routes.currentObjects} element={<CurrentObjects />}></Route>
                 <Route exact path={routes.postObject} element={<CreateOrUpdateObject />}></Route>
                 <Route exact path={routes.deleteObject} element={<DeleteObject />}></Route>
+                <Route exact path={routes.stockTracker} element={<StockTracker />}></Route>
             </Routes>
         </Container>
     );

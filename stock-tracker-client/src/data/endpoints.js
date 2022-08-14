@@ -7,7 +7,9 @@ const endpoints = {
     getTestObjects: `${proxyUrl}/api/testObjects`,
     updateTestObject: (testId) => `${proxyUrl}/api/testObjects/${testId}`,
     saveTestObject: `${proxyUrl}/api/testObjects`,
-    deleteTestObject: (testId) => `${proxyUrl}/api/testObjects/${testId}`
+    deleteTestObject: (testId) => `${proxyUrl}/api/testObjects/${testId}`,
+    getIntradayStockData: (stockSymbol, interval) => `${proxyUrl}/api/stocks/intraday/${stockSymbol}/${interval}`,
+    getDailyStockData: (stockSymbol, compact) => `${proxyUrl}/api/stocks/daily/${stockSymbol}/${compact}`
 };
 
 export default endpoints;

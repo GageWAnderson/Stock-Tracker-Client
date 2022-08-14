@@ -43,6 +43,9 @@ const NavigationBar = () => {
                 <NavItem>
                     <NavLink to={routes.deleteObject} tag={RRNavLink}>Delete Object</NavLink>
                 </NavItem>
+                <NavItem>
+                    <NavLink to={routes.stockTracker} tag={RRNavLink}>Stock Tracker</NavLink>
+                </NavItem>
             </Nav>
         </Navbar>
     );
