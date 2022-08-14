@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import saveStatus from '../../util/saveStatus';
 import timePeriods from '../../data/timePeriods';
 import { getDailyStockDataRequest, getIntradayStockDataRequest } from '../../util/requests';
@@ -6,6 +6,7 @@ import { Line } from 'react-chartjs-2';
 import { Chart, registerables } from "chart.js";
 import { Form, FormGroup, FormText, Input, Label } from 'reactstrap';
 import DisplayedStocksList from "./DisplayedStocksList";
+import getRandInt from '../../util/getRandInt';
 Chart.register(...registerables);
 
 const StockTracker = () => {
@@ -31,7 +32,8 @@ const StockTracker = () => {
         }
     }
 
-    const [stockData, setStockData] = useState({});
+    const [stockData, setStockData] = useState([]);
+    const [chartData, setChartData] = useState({});
     const [interval, setInterval] = useState(1);
     const [compact, setCompact] = useState(true);
     const [timePeriod, setTimePeriod] = useState(timePeriods.DAILY);
@@ -68,7 +70,7 @@ const StockTracker = () => {
         setPageStatus(saveStatus.LOADING);
         getIntradayStockDataRequest(stockSymbol, interval)
             .then((data) => {
-                parseStockQueryData(data);
+                setStockData(prevStockData => { return prevStockData.concat(data) })
                 setPageStatus(saveStatus.SUCCESS);
             })
             .catch(() => {
@@ -81,7 +83,7 @@ const StockTracker = () => {
         setPageStatus(saveStatus.LOADING);
         getDailyStockDataRequest(stockSymbol, compact)
             .then((data) => {
-                parseStockQueryData(data);
+                setStockData(prevStockData => { return prevStockData.concat(data) })
                 setPageStatus(saveStatus.SUCCESS);
             })
             .catch(() => {
@@ -99,19 +101,38 @@ const StockTracker = () => {
         }
     }
 
-    const parseStockQueryData = (rawApiData) => {
-        const chartData = {
-            labels: rawApiData.metaData.times,
-            datasets: [{
-                label: `Stock price of ${stockSymbol}`,
-                data: rawApiData.timeSeries.map((stockPriceData) => {
-                    return stockPriceData.close;
-                }),
-                borderColor: 'rgb(0,255,0)'
-            }]
+    const chartDataSet = (stockTimeSeries) => {
+        return {
+            label: `Stock price of ${stockTimeSeries.metaData.symbol}`,
+            data: stockTimeSeries.timeSeries.map((timeSeriesPoint) => { return timeSeriesPoint.close }),
+            borderColor: `rgb(${getRandInt(0, 255)},${getRandInt(0, 255)},${getRandInt(0, 255)})`
         }
-        setStockData(chartData);
     }
+
+    // Whenever stock data is removed by ticker, update Stock Data
+    useEffect(() => {
+        setStockData(prevStockData => {
+            return prevStockData.filter(prevStockDataPoint => {
+                return displayedStocks.includes(prevStockDataPoint.metaData.symbol);
+            })
+        })
+    }, [displayedStocks])
+
+    // Whenever the stock data is updated, reload the chart
+    useEffect(() => {
+        const longestLabels = stockData.reduce((longestLabel, currStockDataPoint) => {
+            if (currStockDataPoint.metaData.times.length > longestLabel.length) {
+                return currStockDataPoint.metaData.times;
+            } else {
+                return longestLabel;
+            }
+        }, [])
+        const newChartData = {
+            labels: longestLabels,
+            datasets: stockData.map((stockTimeSeries) => { return chartDataSet(stockTimeSeries) })
+        }
+        setChartData(newChartData);
+    }, [stockData])
 
     const renderCompactSelect = () => {
         return (
@@ -211,8 +232,8 @@ const StockTracker = () => {
         } else {
             return (
                 <>
-                    {pageStatus === saveStatus.SUCCESS ?
-                        <Line options={options} data={stockData} />
+                    {pageStatus === saveStatus.SUCCESS && displayedStocks.length > 0 ?
+                        <Line options={options} data={chartData} />
                         : null}
                     <DisplayedStocksList stockList={displayedStocks} setStockList={setDisplayedStocks} />
                     {stockInfoInputForm()}

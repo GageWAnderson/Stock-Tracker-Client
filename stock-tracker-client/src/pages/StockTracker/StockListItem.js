@@ -5,7 +5,9 @@ const StockListItem = ({ stock, stockList, setStockList }) => {
 
     const removeStock = (event) => {
         event.preventDefault();
-        setStockList(stockList.filter(thisStock => thisStock !== stock));
+        setStockList(stockList.filter(thisStock => {
+            return thisStock !== stock;
+        }));
     }
 
     return (

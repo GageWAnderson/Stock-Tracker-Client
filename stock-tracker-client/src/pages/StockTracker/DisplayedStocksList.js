@@ -7,9 +7,9 @@ const DisplayedStocksList = ({ stockList, setStockList }) => {
 
     return (
         <ListGroup>
-            {stockList.map(stock => {
+            {stockList.map((stock, idx) => {
                 return (
-                    <StockListItem stock={stock} stockList={stockList} setStockList={setStockList} />
+                    <StockListItem key={idx} stock={stock} stockList={stockList} setStockList={setStockList} />
                 );
             })}
         </ListGroup>

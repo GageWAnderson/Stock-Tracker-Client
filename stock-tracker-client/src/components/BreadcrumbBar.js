@@ -9,9 +9,9 @@ const BreadcrumbBar = () => {
 
     const breadcrumbs = useSelector((state) => state.breadcrumb.breadcrumbs);
 
-    const item = (text) => {
+    const item = (text, idx) => {
         return (
-            <BreadcrumbItem active>
+            <BreadcrumbItem key={idx} active>
                 {text}
             </BreadcrumbItem>
         );
@@ -19,7 +19,7 @@ const BreadcrumbBar = () => {
 
     return (
         <Breadcrumb>
-            {breadcrumbs.map((breadcrumb) => item(breadcrumb))}
+            {breadcrumbs.map((breadcrumb, idx) => item(breadcrumb, idx))}
         </Breadcrumb>
     );
 };

@@ -22,7 +22,7 @@ const NavigationBar = () => {
     }, [location, dispatch])
 
     return (
-        <Navbar color='dark' dark fluid >
+        <Navbar color='dark' dark>
             <NavbarBrand>Stock Tracker</NavbarBrand>
             <Nav className="me-auto">
                 <NavItem>
