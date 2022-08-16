@@ -1,11 +1,8 @@
 const routes = {
     home: "/",
-    about: "/about",
-    contact: "/contact",
-    currentObjects: "/currentObjects",
-    postObject: "/postObject",
-    deleteObject: "/deleteObject",
-    stockTracker: "/stockTracker"
+    profile: "/profile",
+    stockTracker: "/stockTracker",
+    myPortfolio: "/portfolio"
 };
 
 export default routes;

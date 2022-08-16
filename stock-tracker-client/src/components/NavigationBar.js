@@ -29,22 +29,13 @@ const NavigationBar = () => {
                     <NavLink to={routes.home} tag={RRNavLink}>Home</NavLink>
                 </NavItem>
                 <NavItem>
-                    <NavLink to={routes.about} tag={RRNavLink}>About</NavLink>
-                </NavItem>
-                <NavItem>
-                    <NavLink to={routes.contact} tag={RRNavLink}>Contact</NavLink>
-                </NavItem>
-                <NavItem>
-                    <NavLink to={routes.currentObjects} tag={RRNavLink}>Current Objects</NavLink>
-                </NavItem>
-                <NavItem>
-                    <NavLink to={routes.postObject} tag={RRNavLink}>Create or Update Object</NavLink>
-                </NavItem>
-                <NavItem>
-                    <NavLink to={routes.deleteObject} tag={RRNavLink}>Delete Object</NavLink>
+                    <NavLink to={routes.profile} tag={RRNavLink}>Profile</NavLink>
                 </NavItem>
                 <NavItem>
                     <NavLink to={routes.stockTracker} tag={RRNavLink}>Stock Tracker</NavLink>
+                </NavItem>
+                <NavItem>
+                    <NavLink to={routes.myPortfolio} tag={RRNavLink}>My Portfolio</NavLink>
                 </NavItem>
             </Nav>
         </Navbar>

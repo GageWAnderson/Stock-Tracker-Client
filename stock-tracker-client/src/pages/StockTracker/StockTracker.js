@@ -4,9 +4,10 @@ import timePeriods from '../../data/timePeriods';
 import { getDailyStockDataRequest, getIntradayStockDataRequest } from '../../util/requests';
 import { Line } from 'react-chartjs-2';
 import { Chart, registerables } from "chart.js";
-import { Form, FormGroup, FormText, Input, Label } from 'reactstrap';
+import { Form, FormGroup, Input, Label } from 'reactstrap';
 import DisplayedStocksList from "./DisplayedStocksList";
 import getRandInt from '../../util/getRandInt';
+import StockSearch from "./StockSearch/StockSearch";
 Chart.register(...registerables);
 
 const StockTracker = () => {
@@ -40,11 +41,6 @@ const StockTracker = () => {
     const [stockSymbol, setStockSymbol] = useState(null);
     const [pageStatus, setPageStatus] = useState(saveStatus.UNSAVED);
     const [displayedStocks, setDisplayedStocks] = useState([]);
-
-    const changeStockSymbol = (event) => {
-        event.preventDefault();
-        setStockSymbol(event.target.value);
-    }
 
     const changeInterval = (event) => {
         event.preventDefault();
@@ -190,13 +186,7 @@ const StockTracker = () => {
     const stockInfoInputForm = () => {
         return (
             <Form onSubmit={submitStockQuery}>
-                <FormGroup>
-                    <Label>Input stock ticker symbol</Label>
-                    <Input onChange={changeStockSymbol} />
-                    <FormText>
-                        Must be a valid (all-caps) ticker symbol on the NYSE.
-                    </FormText>
-                </FormGroup>
+                <StockSearch stockSymbol={stockSymbol} setStockSymbol={setStockSymbol} />
                 <FormGroup>
                     <Label for="timePeriodSelect">
                         Select a timescale for stock data.

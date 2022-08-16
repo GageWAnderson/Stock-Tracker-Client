@@ -73,6 +73,10 @@ export const sendUpdateObjectRequest = async (id, data) => {
     return processRequest(endpoints.updateTestObject(id), generateRequest('PUT', data));
 }
 
+export const getStockSymbolSearchResultsRequest = async (searchString) => {
+    return processRequest(endpoints.getStockSymbolSearchResults(searchString));
+}
+
 export const getIntradayStockDataRequest = async (stockSymbol, interval) => {
     return processRequest(endpoints.getIntradayStockData(stockSymbol, interval))
 }

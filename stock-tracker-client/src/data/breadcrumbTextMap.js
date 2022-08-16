@@ -1,10 +1,8 @@
 const breadcrumbTextMap = {
     '/': 'Home',
-    '/about': 'About',
-    '/contact': 'Contact',
-    '/currentObjects': 'Get All Objects',
-    '/postObject': 'Create or Update an Object',
-    '/deleteObject': 'Delete Object'
+    '/profile': 'My Profile',
+    '/stockTracker': 'Stock Tracker',
+    '/portfolio': 'My Portfolio'
 }
 
 export default breadcrumbTextMap;
