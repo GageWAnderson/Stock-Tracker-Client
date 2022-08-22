@@ -57,42 +57,23 @@ const processRequest = async (url, data = null) => {
     }
 }
 
-export const sendGetObjectRequest = async (id) => {
-    return processRequest(endpoints.getTestObject(id));
-}
-
-export const sendGetAllObjectsRequest = async () => {
-    return processRequest(endpoints.getTestObjects);
-}
-
-export const sendSaveObjectRequest = async (data) => {
-    return processRequest(endpoints.saveTestObject, generateRequest('POST', data));
-}
-
-export const sendUpdateObjectRequest = async (id, data) => {
-    return processRequest(endpoints.updateTestObject(id), generateRequest('PUT', data));
-}
-
 export const getStockSymbolSearchResultsRequest = async (searchString) => {
-    return processRequest(endpoints.getStockSymbolSearchResults(searchString));
+    return processRequest(endpoints.stockSearch(searchString));
 }
 
 export const getIntradayStockDataRequest = async (stockSymbol, interval) => {
-    return processRequest(endpoints.getIntradayStockData(stockSymbol, interval))
+    return processRequest(endpoints.intradayStockData(stockSymbol, interval))
 }
 
 export const getDailyStockDataRequest = async (stockSymbol, compact) => {
-    return processRequest(endpoints.getDailyStockData(stockSymbol, compact));
+    return processRequest(endpoints.dailyStockData(stockSymbol, compact));
 }
 
-export const sendDeleteObjectRequest = async (id) => {
-    return fetch(endpoints.deleteTestObject(id), generateRequest('DELETE'))
-        .then((response) => {
-            if (!response.ok) {
-                throw new Error(`Failed to delete object, response = ${response.status}`);
-            }
-        })
-        .catch((err) => {
-            throw new Error(`Failed to delete object, err = ${err}`);
-        })
+export const readPortfolio = async (uuid) => {
+    return processRequest(endpoints.portfolio(uuid));
+}
+
+export const postPortfolio = async (uuid, stock, numShares) => {
+    const request = generateRequest('POST', { stockSymbol: stock, shareNumber: numShares });
+    return processRequest(endpoints.portfolio(uuid), request);
 }

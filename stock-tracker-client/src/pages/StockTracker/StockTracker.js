@@ -7,7 +7,7 @@ import { Chart, registerables } from "chart.js";
 import { Form, FormGroup, Input, Label } from 'reactstrap';
 import DisplayedStocksList from "./DisplayedStocksList";
 import getRandInt from '../../util/getRandInt';
-import StockSearch from "./StockSearch/StockSearch";
+import StockSearch from '../../components/StockSearch/StockSearch';
 Chart.register(...registerables);
 
 const StockTracker = () => {
@@ -38,7 +38,7 @@ const StockTracker = () => {
     const [interval, setInterval] = useState(1);
     const [compact, setCompact] = useState(true);
     const [timePeriod, setTimePeriod] = useState(timePeriods.DAILY);
-    const [stockSymbol, setStockSymbol] = useState(null);
+    const [stockSymbol, setStockSymbol] = useState("");
     const [pageStatus, setPageStatus] = useState(saveStatus.UNSAVED);
     const [displayedStocks, setDisplayedStocks] = useState([]);
 
@@ -66,8 +66,12 @@ const StockTracker = () => {
         setPageStatus(saveStatus.LOADING);
         getIntradayStockDataRequest(stockSymbol, interval)
             .then((data) => {
-                setStockData(prevStockData => { return prevStockData.concat(data) })
-                setPageStatus(saveStatus.SUCCESS);
+                if (!data.isValid) {
+                    setPageStatus(saveStatus.FAILURE);
+                } else {
+                    setStockData(prevStockData => { return prevStockData.concat(data) })
+                    setPageStatus(saveStatus.SUCCESS);
+                }
             })
             .catch(() => {
                 setPageStatus(saveStatus.FAILURE);
@@ -79,8 +83,12 @@ const StockTracker = () => {
         setPageStatus(saveStatus.LOADING);
         getDailyStockDataRequest(stockSymbol, compact)
             .then((data) => {
-                setStockData(prevStockData => { return prevStockData.concat(data) })
-                setPageStatus(saveStatus.SUCCESS);
+                if (!data.isValid) {
+                    setPageStatus(saveStatus.FAILURE);
+                } else {
+                    setStockData(prevStockData => { return prevStockData.concat(data) })
+                    setPageStatus(saveStatus.SUCCESS);
+                }
             })
             .catch(() => {
                 setPageStatus(saveStatus.FAILURE);
