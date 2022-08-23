@@ -21,7 +21,7 @@ const StockSearchResults = ({ setStockSymbol, searchResults }) => {
     };
 
     return (
-        <ListGroup>
+        <ListGroup className="stock-result-list">
             {searchResults.map((result, idx) => {
                 return (
                     <ListGroupItem className={idx === activeIndex ? "active" : ""} onClick={setStyleAndStockSymbol} key={idx}>

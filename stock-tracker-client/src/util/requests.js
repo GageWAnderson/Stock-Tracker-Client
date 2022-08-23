@@ -77,3 +77,7 @@ export const postPortfolio = async (uuid, stock, numShares) => {
     const request = generateRequest('POST', { stockSymbol: stock, shareNumber: numShares });
     return processRequest(endpoints.portfolio(uuid), request);
 }
+
+export const getPortfolioValueTimeSeries = async (uuid) => {
+    return processRequest(endpoints.portfolioTimeSeries(uuid));
+}

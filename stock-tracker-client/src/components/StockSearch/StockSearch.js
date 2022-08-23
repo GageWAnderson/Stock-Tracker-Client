@@ -3,6 +3,7 @@ import { FormGroup, Label, Input, Spinner, FormFeedback } from "reactstrap";
 import { getStockSymbolSearchResultsRequest } from "../../util/requests";
 import saveStatus from "../../util/saveStatus";
 import StockSearchResults from "./StockSearchResults";
+import "./StockSearch.css";
 
 const StockSearch = ({ stockSymbol, setStockSymbol, hasError }) => {
 
@@ -72,7 +73,7 @@ const StockSearch = ({ stockSymbol, setStockSymbol, hasError }) => {
                 <Label>Input stock ticker symbol</Label>
                 {getStockInputComponent()}
                 {hasSearched ? <StockSearchResults setStockSymbol={setStockSymbol} searchResults={searchResults} /> : null}
-                <Input type="button" value="Search" onClick={runSearch} />
+                <Input className="stock-search-button" type="button" value="Search" onClick={runSearch} />
             </FormGroup>
         );
     }

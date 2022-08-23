@@ -41,6 +41,7 @@ const StockTracker = () => {
     const [stockSymbol, setStockSymbol] = useState("");
     const [pageStatus, setPageStatus] = useState(saveStatus.UNSAVED);
     const [displayedStocks, setDisplayedStocks] = useState([]);
+    console.log(chartData);
 
     const changeInterval = (event) => {
         event.preventDefault();
@@ -132,7 +133,7 @@ const StockTracker = () => {
             }
         }, [])
         const newChartData = {
-            labels: longestLabels,
+            labels: longestLabels, // Shift lower length labels over to the right
             datasets: stockData.map((stockTimeSeries) => { return chartDataSet(stockTimeSeries) })
         }
         setChartData(newChartData);
